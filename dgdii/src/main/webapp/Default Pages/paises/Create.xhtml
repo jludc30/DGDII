@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePaisesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePaisesLabel_pais}" for="pais" />
+                    <h:inputText id="pais" value="#{paisesController.selected.pais}" title="#{bundle.CreatePaisesTitle_pais}" required="true" requiredMessage="#{bundle.CreatePaisesRequiredMessage_pais}"/>
+                    <h:outputLabel value="#{bundle.CreatePaisesLabel_clave}" for="clave" />
+                    <h:inputText id="clave" value="#{paisesController.selected.clave}" title="#{bundle.CreatePaisesTitle_clave}" required="true" requiredMessage="#{bundle.CreatePaisesRequiredMessage_clave}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{paisesController.create}" value="#{bundle.CreatePaisesSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{paisesController.prepareList}" value="#{bundle.CreatePaisesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePaisesIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

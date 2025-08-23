@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMateriasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListMateriasEmpty}" rendered="#{materiasController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{materiasController.items.rowCount > 0}">
+                    <h:outputText value="#{materiasController.pagination.pageFirstItem + 1}..#{materiasController.pagination.pageLastItem + 1}/#{materiasController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{materiasController.previous}" value="#{bundle.Previous} #{materiasController.pagination.pageSize}" rendered="#{materiasController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{materiasController.next}" value="#{bundle.Next} #{materiasController.pagination.pageSize}" rendered="#{materiasController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{materiasController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMateriasTitle_idMateria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idMateria}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMateriasTitle_materia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.materia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMateriasTitle_idProfesor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idProfesor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{materiasController.prepareView}" value="#{bundle.ListMateriasViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{materiasController.prepareEdit}" value="#{bundle.ListMateriasEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{materiasController.destroy}" value="#{bundle.ListMateriasDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{materiasController.prepareCreate}" value="#{bundle.ListMateriasCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListMateriasIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

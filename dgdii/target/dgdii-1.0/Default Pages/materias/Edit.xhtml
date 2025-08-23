@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditMateriasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditMateriasLabel_idMateria}" for="idMateria" />
+                    <h:inputText id="idMateria" value="#{materiasController.selected.idMateria}" title="#{bundle.EditMateriasTitle_idMateria}" />
+                    <h:outputLabel value="#{bundle.EditMateriasLabel_materia}" for="materia" />
+                    <h:inputText id="materia" value="#{materiasController.selected.materia}" title="#{bundle.EditMateriasTitle_materia}" required="true" requiredMessage="#{bundle.EditMateriasRequiredMessage_materia}"/>
+                    <h:outputLabel value="#{bundle.EditMateriasLabel_idProfesor}" for="idProfesor" />
+                    <h:selectOneMenu id="idProfesor" value="#{materiasController.selected.idProfesor}" title="#{bundle.EditMateriasTitle_idProfesor}" required="true" requiredMessage="#{bundle.EditMateriasRequiredMessage_idProfesor}">
+                        <f:selectItems value="#{profesoresController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{materiasController.update}" value="#{bundle.EditMateriasSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditMateriasViewLink}"/>
+                <br />
+                <h:commandLink action="#{materiasController.prepareList}" value="#{bundle.EditMateriasShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditMateriasIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

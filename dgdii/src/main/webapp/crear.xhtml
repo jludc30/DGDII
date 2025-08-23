@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="spanishLocale.js"/>
+    </h:head>
+
+    <h:body>
+        <h:form id="form_nueva_persona">
+            <p:growl id="mensaje_nueva_persona" showSummary="false" showDetail="true"/>
+
+            <p:panel header="Datos de Persona" id="id_datosPersona">
+                <h:panelGrid columns="4"> 
+                    <h:outputLabel value="Nombre: "/>
+                    <p:inputText id="new_nombre" label="new_nombre" value="#{personasController.selected.nombre}" 
+                                 onblur="this.value = this.value.toUpperCase();"
+                                 required="true" requiredMessage="POR FAVOR ESCRIBE NOMBRE" 
+                                 validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL NOMBRE">
+                        <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                    </p:inputText>
+                    <h:outputLabel value="Paterno: "/>
+                    <p:inputText id="new_paterno" label="new_paterno" value="#{personasController.selected.apaterno}" 
+                                 onblur="this.value = this.value.toUpperCase();"
+                                 required="true" requiredMessage="POR FAVOR ESCRIBE PATERNO" 
+                                 validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL PATERNO">
+                        <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                    </p:inputText>                
+                    <h:outputLabel value="Materno: "/>
+                    <p:inputText id="new_materno" label="new_paterno" value="#{personasController.selected.amaterno}" 
+                                 onblur="this.value = this.value.toUpperCase();"
+                                 required="true" requiredMessage="POR FAVOR ESCRIBE PATERNO" 
+                                 validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL PATERNO">
+                        <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                    </p:inputText>                   
+                    <h:outputLabel value="Fecha de Nacimiento: "/>
+                    <p:calendar id="new_fNacimiento" label="new_fNacimiento"  size="31" 
+                                title="Se deberá indicar la fecha de nacimiento de la persona"  locale="es"
+                                readonlyInput="true" pattern="dd/MM/yyyy" value="#{personasController.selected.fechaNacimiento}"
+                                required="true" requiredMessage="POR FAVOR ELIGE LA FECHA DE NACIMIENTO"
+                                showOn="button" navigator="true" yearRange="c-100:c">
+                    </p:calendar>  
+                    <p:outputLabel value="Sexo: "/>
+                    <p:selectOneRadio id="new_sexo" label="new_sexo" value="#{personasController.selected.sexo}" required="true" requiredMessage="POR FAVOR selecciona tu sexo">
+                        <f:selectItem itemLabel="Masculino" itemValue="1"/>
+                        <f:selectItem itemLabel="Femenino" itemValue="0"/>
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Colonia: "/>
+                    <p:selectOneMenu id="new_colonia" label="new_colonia" value="#{personasController.selected.idColonia}">
+                        <f:selectItem itemLabel="Selecciona colonia..." itemValue="#{null}"/>
+                        <f:selectItems value="#{personasController.selected.idColonia}"
+                                       var="colonia"
+                                       itemValue=""/>
+                        
+                    </p:selectOneMenu>
+                </h:panelGrid>    
+            </p:panel>
+
+            <p:panel header="Datos de Alumno" id="id_datosAlumno">
+                <h:panelGrid columns="4"> 
+                    <h:outputLabel value="Matricula  "/>
+                    <p:inputText id="new_matricula" label="new_matricula" value="#{alumnosController.selected.matricula}" 
+                                 onblur="this.value = this.value.toUpperCase();"
+                                 required="true" requiredMessage="POR FAVOR ESCRIBE NOMBRE" 
+                                 validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN LA MATRICULA">
+                        <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                    </p:inputText>
+                   
+                    <h:outputLabel value="Fecha de Ingreso "/>
+                    <p:calendar id="id_fIngreso" label="id_fIngreso"  size="31" 
+                                title="Se deberá indicar la fecha de Ingreso"  locale="es"
+                                readonlyInput="true" pattern="dd/MM/yyyy" value="#{alumnosController.selected.fechaIngreso}"
+                                required="true" requiredMessage="POR FAVOR ELIGE LA FECHA DE NACIMIENTO"
+                                showOn="button" navigator="true" yearRange="c-100:c">
+                    </p:calendar>  
+                </h:panelGrid>
+            </p:panel>
+            
+            <p:panel header="Datos de Materia" id="id_datosMateria">
+                <h:panelGrid columns="4"> 
+                    <h:outputLabel value="Materia  "/>
+                    <p:inputText id="new_materia" label="new_materia" value="#{alumnosController.selected.matricula}" 
+                                 onblur="this.value = this.value.toUpperCase();"
+                                 required="true" requiredMessage="POR FAVOR ESCRIBE NOMBRE" 
+                                 validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN LA MATRICULA">
+                        <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                    </p:inputText>
+                   
+                    <h:outputLabel value="Fecha de Ingreso "/>
+                    <p:calendar id="id_fIngreso" label="id_fIngreso"  size="31" 
+                                title="Se deberá indicar la fecha de Ingreso"  locale="es"
+                                readonlyInput="true" pattern="dd/MM/yyyy" value="#{alumnosController.selected.fechaIngreso}"
+                                required="true" requiredMessage="POR FAVOR ELIGE LA FECHA DE NACIMIENTO"
+                                showOn="button" navigator="true" yearRange="c-100:c">
+                    </p:calendar>  
+                </h:panelGrid>
+            </p:panel>
+        </h:form>  
+
+    </h:body>
+
+</html>

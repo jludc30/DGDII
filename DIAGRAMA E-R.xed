@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?><Diagram version="1.0" type="ORACLE" versionMajor="8" versionMinor="0" groupSchema="false" hide_inv="false">
+<Table id="0" name="PERSONAS" schema="" database="DGDII" background="16777165">
+<Column id="1" name="ID_PERSONA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="2" name="NOMBRE" type="VARCHAR" length="255" nulls="false"/>
+<Column id="3" name="APATERNO" type="VARCHAR" length="255" nulls="false"/>
+<Column id="4" name="AMATERNO" type="VARCHAR" length="255" nulls="false"/>
+<Column id="5" name="FECHA_NACIMIENTO" type="DATE" length="255" nulls="false"/>
+<Column id="6" name="SEXO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="7" name="ID_COLONIA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="8" name="ALUMNOS" schema="" database="DGDII" background="16777165">
+<Column id="9" name="ID_ALUMNO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="10" name="MATRICULA" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="11" name="FECHA_INGRESO" type="DATE" length="25" nulls="false"/>
+<Column id="12" name="ID_PERSONA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="13" name="PROFESORES" schema="" database="DGDII" background="16777165">
+<Column id="14" name="ID_PROFESOR" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="15" name="NUMERO_CONTROL" type="VARCHAR" length="255" nulls="false"/>
+<Column id="16" name="ID_PERSONA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="17" name="ALUMNOS_MATERIAS" schema="" database="DGDII" background="16777165">
+<Column id="18" name="ID_ALUMNO_MATERIA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="19" name="ID_ALUMNO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="20" name="ID_MATERIA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="21" name="COLONIAS" schema="" database="DGDII" background="16777165">
+<Column id="22" name="ID_COLONIA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="23" name="COLONIA" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="24" name="CP" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="25" name="ID_MUNICIPIO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="26" name="MUNICIPIOS" schema="" database="DGDII" background="16777165">
+<Column id="27" name="ID_MUNICIPIO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="28" name="MUNICIPIO" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="29" name="ID_ESTADO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="30" name="ESTADOS" schema="" database="DGDII" background="16777165">
+<Column id="31" name="ID_ESTADO" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="32" name="ESTADO" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="33" name="CLAVE" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="34" name="ID_PAIS" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="35" name="PAISES" schema="" database="DGDII" background="16777165">
+<Column id="36" name="ID_PAIS" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="37" name="PAIS" type="NVARCHAR2" length="255" nulls="false"/>
+<Column id="38" name="CLAVE" type="NVARCHAR2" length="255" nulls="false"/>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Table id="39" name="MATERIAS" schema="" database="DGDII" background="16777165">
+<Column id="40" name="ID_MATERIA" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Column id="41" name="MATERIA" type="VARCHAR2" length="255" nulls="false"/>
+<Column id="42" name="ID_PROFESOR" type="NUMBER" length="25" nulls="false">
+<CP name="PRECISION">8</CP>
+<CP name="SCALE">0</CP>
+</Column>
+<Storage name="Logging" value="DEFAULT"/>
+<Storage name="TempOnCommit" value=""/>
+<Storage name="ValueCompression" value="false"/>
+<Storage name="DistributeRandom" value="false"/>
+<Storage name="NoLogging" value="false"/>
+<Storage name="WithCRCols" value="false"/>
+<Storage name="Parallel" value="DEFAULT"/>
+<Storage name="transferTable" value="false"/>
+<Storage name="BufferPool" value="DEFAULT"/>
+<Storage name="Caching" value="DEFAULT"/>
+<Storage name="db2zVolatile" value="false"/>
+<Storage name="db2zRestrictOnDrop" value="false"/>
+<Storage name="AppendMode" value="false"/>
+<Storage name="External" value="false"/>
+<Storage name="RowMovement" value="DEFAULT"/>
+<Storage name="Monitoring" value="DEFAULT"/>
+</Table>
+<Relation id="43" name="REL_MUNICIPIOS-COLONIAS" cardinality="-2" identifying="false" nulls="false">
+<FK>27</FK>
+<PK>25</PK>
+<Text/>
+</Relation>
+<Relation id="44" name="REL_COLONIAS-PERSONAS" cardinality="-2" identifying="false" nulls="false">
+<FK>22</FK>
+<PK>7</PK>
+</Relation>
+<Relation id="45" name="REL_PROFESORES-MATERIAS" cardinality="-2" identifying="false" nulls="false">
+<FK>14</FK>
+<PK>42</PK>
+</Relation>
+<Relation id="46" name="REL_MATERIAS-ALUMNOSMATERIAS" cardinality="-2" identifying="false" nulls="false">
+<FK>40</FK>
+<PK>20</PK>
+</Relation>
+<Relation id="47" name="REL_ALUMNOS-ALUMNOSMATERIAS" cardinality="-2" identifying="false" nulls="false">
+<FK>9</FK>
+<PK>19</PK>
+</Relation>
+<Relation id="48" name="REL_ESTADOS-MUNICIPIOS" cardinality="-2" identifying="false" nulls="false">
+<FK>31</FK>
+<PK>29</PK>
+</Relation>
+<Relation id="49" name="REL_PERSONAS-ALUMNOS" cardinality="-2" identifying="false" nulls="false">
+<FK>1</FK>
+<PK>12</PK>
+</Relation>
+<Relation id="50" name="REL_PERSONAS-PROFESORES" cardinality="-2" identifying="false" nulls="false">
+<FK>1</FK>
+<PK>16</PK>
+</Relation>
+<Relation id="51" name="REL_PAISES-ESTADOS" cardinality="-2" identifying="false" nulls="false">
+<FK>36</FK>
+<PK>34</PK>
+</Relation>
+<Constraint table="0" name="PK_PERSONAS" type="PrimKey">
+<ConstraintColumn id="1"/>
+</Constraint>
+<Constraint table="8" name="PK_ALUMNOS" type="PrimKey">
+<ConstraintColumn id="9"/>
+</Constraint>
+<Constraint table="13" name="PK_PROFESORES" type="PrimKey">
+<ConstraintColumn id="14"/>
+</Constraint>
+<Constraint table="17" name="PK_ALUMNOS_MATERIAS" type="PrimKey">
+<ConstraintColumn id="18"/>
+</Constraint>
+<Constraint table="21" name="PK_COLONIAS" type="PrimKey">
+<ConstraintColumn id="22"/>
+</Constraint>
+<Constraint table="26" name="PK_MUNICIPIOS" type="PrimKey">
+<ConstraintColumn id="27"/>
+</Constraint>
+<Constraint table="30" name="PK_ESTADOS" type="PrimKey">
+<ConstraintColumn id="31"/>
+</Constraint>
+<Constraint table="35" name="PK_PAISES" type="PrimKey">
+<ConstraintColumn id="36"/>
+</Constraint>
+<Constraint table="39" name="PK_MATERIAS" type="PrimKey">
+<ConstraintColumn id="40"/>
+</Constraint>
+<Sheet name="Untitled 1" id="52" disp_at="true" disp_ph="true" disp_co="true" disp_rn="true">
+<Place id="30" visible="true">880,60,191,90</Place>
+<Place id="44" visible="true" options="50.0,71.0,221.0,90.0,39.0,299.0,242.0,151.0,2,120.0,161.0,120.0,299.0">651,-25,67,0</Place>
+<Place id="51" visible="true" options="1239.0,59.0,221.0,91.0,880.0,60.0,191.0,90.0,2,1239.0,120.0,1071.0,120.0">470,29,-1,0</Place>
+<Place id="47" visible="true" options="29.0,660.0,211.0,100.0,417.0,671.0,225.0,90.0,2,240.0,690.0,417.0,690.0">423,-40,28,0</Place>
+<Place id="39" visible="true">837,669,224,92</Place>
+<Place id="13" visible="true">770,319,231,82</Place>
+<Place id="48" visible="true" options="880.0,60.0,191.0,90.0,489.0,49.0,211.0,81.0,2,880.0,80.0,700.0,80.0">382,26,-11,0</Place>
+<Place id="8" visible="true">29,660,211,100</Place>
+<Place id="45" visible="true" options="770.0,319.0,231.0,82.0,837.0,669.0,224.0,92.0,4,890.0,401.0,915.0,401.0,915.0,669.0,940.0,669.0">456,-97,0,0</Place>
+<Place id="46" visible="true" options="837.0,669.0,224.0,92.0,417.0,671.0,225.0,90.0,2,837.0,710.0,642.0,710.0">489,43,0,0</Place>
+<Place id="49" visible="true" options="39.18881681795694,299.1959594928935,242.0,151.0,29.0,660.0,211.0,100.0,5,120.0,450.1959594928935,125.0,450.1959594928935,125.0,650.3015151901651,130.0,650.3015151901651,130.0,660.0">463,-73,0,0</Place>
+<Place id="17" visible="true">417,671,225,90</Place>
+<Place id="26" visible="true">489,49,211,81</Place>
+<Place id="43" visible="true" options="489.0,49.0,211.0,81.0,50.0,71.31370849898475,221.0,90.0,2,489.0,90.0,271.0,90.0">490,10,0,-20</Place>
+<Place id="21" visible="true">50,71,221,90</Place>
+<Place id="0" visible="true">39,299,242,151</Place>
+<Place id="35" visible="true">1239,59,221,91</Place>
+<Place id="50" visible="true" options="39.18881681795694,299.1959594928935,242.0,151.0,770.0,319.0,231.0,82.0,2,281.0,360.0,770.0,360.0">430,-24,0,0</Place>
+</Sheet>
+<Settings sheet="52" zoom="1.0"/>
+</Diagram>

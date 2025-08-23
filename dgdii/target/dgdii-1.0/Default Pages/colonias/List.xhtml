@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListColoniasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListColoniasEmpty}" rendered="#{coloniasController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{coloniasController.items.rowCount > 0}">
+                    <h:outputText value="#{coloniasController.pagination.pageFirstItem + 1}..#{coloniasController.pagination.pageLastItem + 1}/#{coloniasController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{coloniasController.previous}" value="#{bundle.Previous} #{coloniasController.pagination.pageSize}" rendered="#{coloniasController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{coloniasController.next}" value="#{bundle.Next} #{coloniasController.pagination.pageSize}" rendered="#{coloniasController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{coloniasController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListColoniasTitle_idColonia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idColonia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListColoniasTitle_cp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cp}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListColoniasTitle_colonia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.colonia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListColoniasTitle_idMunicipio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idMunicipio}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{coloniasController.prepareView}" value="#{bundle.ListColoniasViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{coloniasController.prepareEdit}" value="#{bundle.ListColoniasEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{coloniasController.destroy}" value="#{bundle.ListColoniasDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{coloniasController.prepareCreate}" value="#{bundle.ListColoniasCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListColoniasIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,20 @@
+
+# Build outputs
+**/target/
+*.class
+*.log
+*.war
+*.ear
+*.dpf
+
+# IDEs
+nbproject/private/
+build/
+dist/
+.idea/
+*.iml
+out/
+.project
+.classpath
+.settings/
+*.jar
