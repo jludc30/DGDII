@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>Registrar Alumno</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="spanishLocale.js"/>
+    </h:head>
+    <h:body>
+        <h:form id="form_nuevo_alumno">
+            <p:growl showSummary="false" showDetail="true"/>
+            <center>
+                <p:panel header="Datos Personales: " id="id_datos_personales_alumno" style="width: 80% ">
+                    <h:panelGrid columns="4">
+                        <h:outputLabel value="Nombre: "/>
+                        <p:inputText id="new_nombre" label="new_nombre" value="#{alumnosController.persona.nombre}"
+                                     onblur="this.value = this.value.toUpperCase()" 
+                                     required ="true" requiredMessage="POR FAVOR ESCRIBA SU NOMBRE"
+                                     validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL NOMBRE"> 
+                            <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                        </p:inputText>
+                        <h:outputLabel value="Apellido Paterno "/>
+                        <p:inputText id="new_apaterno" label="new_apaterno" value="#{alumnosController.persona.apaterno}"
+                                     onblur="this.value = this.value.toUpperCase()" 
+                                     required ="true" requiredMessage="POR FAVOR ESCRIBA SU APELLIDO"
+                                     validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL NOMBRE"> 
+                            <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                        </p:inputText>
+                        <h:outputLabel value="Apellido Materno "/>
+                        <p:inputText id="new_amaterno" label="new_amaterno" value="#{alumnosController.persona.amaterno}"
+                                     onblur="this.value = this.value.toUpperCase()" 
+                                     required ="true" requiredMessage="POR FAVOR ESCRIBA SU APELLIDO"
+                                     validatorMessage="NO SE PERMITEN CARACTERES ESPECIALES NI ACENTOS EN EL NOMBRE"> 
+                            <f:validateRegex pattern="[A-Za-zÑñ+][\s[A-Za-zÑñ]+]*"/>
+                        </p:inputText>
+                        <h:outputLabel value="Fecha de Nacimiento "/>
+                        <p:datePicker id="id_fNacimiento" value="#{alumnosController.persona.fechaNacimiento}"
+                                      readonlyInput="true" showIcon="true" locale="es" pattern="yyyy-MM-dd"
+                                      showOnFocus="false" monthNavigator="true" yearNavigator="true" yearRange="1950:2050"/>
+                        <p:outputLabel value="Sexo: "/>
+                        <p:selectOneRadio id="new_sexo" value="#{alumnosController.persona.sexo}" required="true" requiredMessage="POR FAVOR selecciona tu sexo">
+                            <f:selectItem itemLabel="F" itemValue="0"/>
+                            <f:selectItem itemLabel="M" itemValue="1"/>
+                        </p:selectOneRadio>
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            
+            <center>
+                <p:panel header="Direccion " id="id_datos_direccion_alumno" style="width: 80% ">
+                    <h:panelGrid columns="8">
+                        
+                        <p:outputLabel value="Pais: "/>
+                        <p:selectOneMenu id="cat_pais" value="#{alumnosController.pais}" filter="true" filterMatchMode="contains"
+                                         required="true" requiredMessage="INGRESA TU PAIS: ">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{paisesController.itemsAvailableSelectOne}"/>
+                            <p:ajax event="change" process="@this cat_pais" update="cat_estados"
+                                    listener="#{estadosController.findEstadoByPais}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Estado: "/>
+                        <p:selectOneMenu id="cat_estados" value="#{alumnosController.estado}" filter="true" filterMatchMode="contains"
+                                         required="true" requiredMessage="INGRESA TU ESTADO: ">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{estadosController.itemsEstadosList}"/>
+                            <p:ajax event="change"
+                                    process="@this cat_estados"
+                                    update="cat_municipios"
+                                    listener="#{municipiosController.findMunicipiosById}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Municipio: "/>
+                        <p:selectOneMenu id="cat_municipios" value="#{alumnosController.municipio}" filter="true" filterMatchMode="contains"
+                                         required="true" requiredMessage="INGRESA TU MUNICIPIO: ">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{municipiosController.itemsMunicipiosList}"/>
+                            <p:ajax event="change"
+                                    process="@this cat_municipios"
+                                    update="cat_colonias"
+                                    listener="#{coloniasController.findColoniasByMunicipioId}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Colonia: "/>
+                        <p:selectOneMenu id="cat_colonias" value="#{alumnosController.persona.idColonia}" filter="true" filterMatchMode="contains"
+                                         required="true" requiredMessage="INGRESA TU COLONIA: ">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{coloniasController.itemsColoniasList}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+                
+            </center>
+            
+        </h:form>
+    </h:body>
+</html>

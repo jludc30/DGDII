@@ -109,7 +109,7 @@ public class Paises implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Paises[ idPais=" + idPais + " ]";
+        return " "+this.pais + "("+this.clave+")";
     }
     
 }

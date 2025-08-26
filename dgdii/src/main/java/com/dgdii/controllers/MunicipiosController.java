@@ -4,16 +4,20 @@ import com.dgdii.models.Municipios;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.MunicipiosFacade;
-
+import com.dgdii.models.Estados;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -24,11 +28,21 @@ public class MunicipiosController implements Serializable {
 
     private Municipios current;
     private DataModel items = null;
-    @EJB
-    private com.dgdii.ejb.MunicipiosFacade ejbFacade;
+    @EJB private com.dgdii.ejb.MunicipiosFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    private List<Municipios> municipios;
+    
+    public void findMunicipiosById(AjaxBehaviorEvent ev){
+        this.municipios = new ArrayList<>();
+        Estados estado = (Estados)((UIOutput) ev.getSource()).getValue();
+        this.municipios = ejbFacade.findMunicipiosByEstado(estado.getIdEstado());
+    }
+    
+    public SelectItem[] getItemsMunicipiosList(){
+        return this.municipios != null ? JsfUtil.getSelectItems(this.municipios, false): null;
+    }
+    
     public MunicipiosController() {
     }
 

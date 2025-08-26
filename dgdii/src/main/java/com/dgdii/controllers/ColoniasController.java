@@ -4,16 +4,21 @@ import com.dgdii.models.Colonias;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.ColoniasFacade;
+import com.dgdii.models.Municipios;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -28,8 +33,19 @@ public class ColoniasController implements Serializable {
     private com.dgdii.ejb.ColoniasFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    private List<Colonias> colonias;
+    
     public ColoniasController() {
+    }
+    
+    public void findColoniasByMunicipioId(AjaxBehaviorEvent ev){
+       this.colonias = new ArrayList<>();
+        Municipios municipio = (Municipios)((UIOutput)ev.getSource()).getValue();
+        this.colonias = ejbFacade.findColoniaByMunicipioId(municipio.getIdMunicipio());
+    }
+    
+    public SelectItem[] getItemsColoniasList(){
+        return this.colonias != null ? JsfUtil.getSelectItems(this.colonias, false): null;
     }
 
     public Colonias getSelected() {

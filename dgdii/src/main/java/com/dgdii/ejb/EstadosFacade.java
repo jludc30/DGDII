@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.dgdii.ejb;
 
 import com.dgdii.models.Estados;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author JLuDC
- */
+
 @Stateless
 public class EstadosFacade extends AbstractFacade<Estados> {
 
@@ -26,6 +20,14 @@ public class EstadosFacade extends AbstractFacade<Estados> {
 
     public EstadosFacade() {
         super(Estados.class);
+    }
+    
+    public List<Estados> findByPaisId(Integer idPais){
+        String query = "SELECT e "
+                + "FROM Estados e "
+                + "WHERE e.idPais.idPais=:idPais";
+        System.out.println(query+"idPais: "+idPais);
+        return em.createQuery(query, Estados.class).setParameter("idPais", idPais).getResultList();
     }
     
 }

@@ -101,7 +101,7 @@ public class Municipios implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Municipios[ idMunicipio=" + idMunicipio + " ]";
+        return this.municipio;
     }
     
 }

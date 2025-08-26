@@ -116,7 +116,7 @@ public class Colonias implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Colonias[ idColonia=" + idColonia + " ]";
+        return  this.colonia + "(" + this.cp+")";
     }
     
 }

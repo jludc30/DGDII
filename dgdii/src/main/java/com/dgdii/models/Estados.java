@@ -116,7 +116,7 @@ public class Estados implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Estados[ idEstado=" + idEstado + " ]";
+        return this.estado+" ("+this.clave+")";
     }
     
 }

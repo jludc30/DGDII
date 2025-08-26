@@ -28,6 +28,7 @@ public class PaisesController implements Serializable {
     private com.dgdii.ejb.PaisesFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
 
     public PaisesController() {
     }

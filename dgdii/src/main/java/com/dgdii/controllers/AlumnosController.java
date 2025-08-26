@@ -4,12 +4,17 @@ import com.dgdii.models.Alumnos;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.AlumnosFacade;
-
+import com.dgdii.models.Colonias;
+import com.dgdii.models.Estados;
+import com.dgdii.models.Municipios;
+import com.dgdii.models.Paises;
+import com.dgdii.models.Personas;
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,29 +24,33 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("alumnosController")
-@SessionScoped
+@ViewScoped
 public class AlumnosController implements Serializable {
-
+    
+    @EJB private AlumnosFacade alumnoEJB;
+    
+    
     private Alumnos current;
-    private DataModel items = null;
-    @EJB
-    private com.dgdii.ejb.AlumnosFacade ejbFacade;
+    
+    private Personas persona;
+    private Paises pais;
+    private Estados estado;
+    private Municipios municipio;
+    private Colonias colonia;
+    
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    private DataModel items = null;
+    
+    
     public AlumnosController() {
+        System.out.println("Se inicia constructor");
     }
 
-    public Alumnos getSelected() {
-        if (current == null) {
-            current = new Alumnos();
-            selectedItemIndex = -1;
-        }
-        return current;
-    }
-
-    private AlumnosFacade getFacade() {
-        return ejbFacade;
+    @PostConstruct
+    public void init(){
+        persona = new Personas();
+        System.out.println("Se inicia constructor");
     }
 
     public PaginationHelper getPagination() {
@@ -181,15 +190,15 @@ public class AlumnosController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(alumnoEJB.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(alumnoEJB.findAll(), true);
     }
 
     public Alumnos getAlumnos(java.lang.Integer id) {
-        return ejbFacade.find(id);
+        return alumnoEJB.find(id);
     }
 
     @FacesConverter(forClass = Alumnos.class)
@@ -232,4 +241,29 @@ public class AlumnosController implements Serializable {
 
     }
 
+        // Entity References
+    public Personas getPersona() { return persona; }
+    public void setPersona(Personas persona) { this.persona = persona; }
+    public Paises getPais() { return pais; }
+    public void setPais(Paises pais) { this.pais = pais; }
+    public Estados getEstado() { return estado; }
+    public void setEstado(Estados estado) { this.estado = estado; }
+    public Municipios getMunicipio() { return municipio; }
+    public void setMunicipio(Municipios municipio) { this.municipio = municipio; }
+    public Colonias getColonia() { return colonia; }
+    public void setColonia(Colonias colonia) { this.colonia = colonia; }
+
+    private AlumnosFacade getFacade() { return alumnoEJB; }
+    
+    public Alumnos getSelected() {
+        if (current == null) {
+            current = new Alumnos();
+            selectedItemIndex = -1;
+        }
+        return current;
+    }
+
+    
+    
+    
 }

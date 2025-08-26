@@ -5,6 +5,7 @@
 package com.dgdii.ejb;
 
 import com.dgdii.models.Municipios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,4 +29,11 @@ public class MunicipiosFacade extends AbstractFacade<Municipios> {
         super(Municipios.class);
     }
     
+    public List<Municipios> findMunicipiosByEstado(Integer idEstado){
+        String query = "SELECT m "
+                + "FROM Municipios m "
+                + "WHERE m.idEstado.idEstado = :idEstado";
+        
+        return em.createQuery(query, Municipios.class).setParameter("idEstado", idEstado).getResultList();
+    }
 }

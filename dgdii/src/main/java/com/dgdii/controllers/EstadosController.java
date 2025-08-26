@@ -4,16 +4,20 @@ import com.dgdii.models.Estados;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.EstadosFacade;
-
+import com.dgdii.models.Paises;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -28,8 +32,20 @@ public class EstadosController implements Serializable {
     private com.dgdii.ejb.EstadosFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    private List<Estados> estados;
+    
+    
     public EstadosController() {
+    }
+    
+    public void findEstadoByPais(AjaxBehaviorEvent ev){
+        this.estados = new ArrayList<>();
+        Paises pais = (Paises)((UIOutput) ev.getSource()).getValue(); //En esta linea capturamos el valor que atrapamos del frontend o sea el pais
+        this.estados = ejbFacade.findByPaisId(pais.getIdPais());
+    }
+    
+    public SelectItem[] getItemsEstadosList(){
+        return this.estados != null ? JsfUtil.getSelectItems(this.estados, false): null;
     }
 
     public Estados getSelected() {
@@ -231,5 +247,5 @@ public class EstadosController implements Serializable {
         }
 
     }
-
+    
 }
