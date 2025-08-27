@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.dgdii.ejb;
 
 import com.dgdii.models.Profesores;
@@ -9,10 +5,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author JLuDC
- */
 @Stateless
 public class ProfesoresFacade extends AbstractFacade<Profesores> {
 
@@ -28,4 +20,11 @@ public class ProfesoresFacade extends AbstractFacade<Profesores> {
         super(Profesores.class);
     }
     
+    public Profesores findProfesoreByMateriaId(Integer idMateria){
+       String query = "SELECT m.idProfesor "
+                    + "FROM Materias m "
+                    + "WHERE m.idMateria = :idMateria";
+       return em.createQuery(query, Profesores.class).setParameter("idMateria", idMateria).getSingleResult();
+   }
+
 }

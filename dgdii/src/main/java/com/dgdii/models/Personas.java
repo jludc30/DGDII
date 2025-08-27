@@ -9,10 +9,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author JLuDC
- */
+
 @Entity
 @Table(name = "PERSONAS")
 @XmlRootElement
@@ -55,7 +52,7 @@ public class Personas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "SEXO")
-    private int sexo;
+    private Integer sexo;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Colonias idColonia;
@@ -120,11 +117,11 @@ public class Personas implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getSexo() {
+    public Integer getSexo() {
         return sexo;
     }
 
-    public void setSexo(int sexo) {
+    public void setSexo(Integer sexo) {
         this.sexo = sexo;
     }
 

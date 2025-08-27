@@ -31,6 +31,10 @@ public class AlumnosMateriasController implements Serializable {
 
     public AlumnosMateriasController() {
     }
+    
+    public void agregarMateria(){
+        System.out.println("Agregando materia: ");
+    }
 
     public AlumnosMaterias getSelected() {
         if (current == null) {

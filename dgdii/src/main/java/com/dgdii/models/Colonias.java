@@ -116,7 +116,7 @@ public class Colonias implements Serializable {
 
     @Override
     public String toString() {
-        return  this.colonia + "(" + this.cp+")";
+        return  this.colonia + " (" + this.cp+")";
     }
     
 }

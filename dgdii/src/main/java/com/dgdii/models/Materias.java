@@ -101,7 +101,7 @@ public class Materias implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Materias[ idMateria=" + idMateria + " ]";
+        return this.materia;
     }
     
 }

@@ -101,7 +101,7 @@ public class Profesores implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Profesores[ idProfesor=" + idProfesor + " ]";
+        return this.idPersona.getNombre()+" ("+this.numeroControl+") ";
     }
     
 }

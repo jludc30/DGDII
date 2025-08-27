@@ -4,12 +4,10 @@ import com.dgdii.models.Alumnos;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.AlumnosFacade;
-import com.dgdii.models.Colonias;
-import com.dgdii.models.Estados;
-import com.dgdii.models.Municipios;
-import com.dgdii.models.Paises;
-import com.dgdii.models.Personas;
+import com.dgdii.models.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,30 +27,74 @@ public class AlumnosController implements Serializable {
     
     @EJB private AlumnosFacade alumnoEJB;
     
-    
     private Alumnos current;
-    
+    private AlumnosMaterias alumnoMateria;
     private Personas persona;
+    private Materias materia; 
     private Paises pais;
     private Estados estado;
     private Municipios municipio;
     private Colonias colonia;
+    private List<AlumnosMaterias> alumnosMateriasList = null;
     
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private DataModel items = null;
     
+    @PostConstruct
+    public void init() {
+        if (persona == null) {
+            persona = new Personas();
+        }
+        if (materia == null) {
+            materia = new Materias();
+        }
+        
+        if (alumnoMateria == null) {
+            alumnoMateria = new AlumnosMaterias();
+        }
+        if (alumnosMateriasList == null) {
+            alumnosMateriasList = new ArrayList<>();
+        }
+        System.out.println("Se inicia PostConstructor");
+    }
     
     public AlumnosController() {
-        System.out.println("Se inicia constructor");
     }
 
-    @PostConstruct
-    public void init(){
-        persona = new Personas();
-        System.out.println("Se inicia constructor");
+    public void guardarAlumno(){
+        System.out.println("Loading...");
+        System.out.println("Alumno: ");   
+        System.out.println("Nombre: "+this.persona.getNombre());
+        System.out.println("Apellido Paterno: "+this.persona.getApaterno());
+        System.out.println("Apellido Materno : "+this.persona.getAmaterno());
+        System.out.println("Sexo: "+this.persona.getSexo());
+        System.out.println("Fecha Nacimiento: "+this.persona.getFechaNacimiento());
+        System.out.println("Colonia: "+this.colonia.getColonia());
+        System.out.println("Municipio: "+this.municipio.getMunicipio());
+        System.out.println("Estado: "+this.estado.getEstado());
+        System.out.println("Pais: "+this.pais.getPais());     
+        System.out.println("Matricula: "+this.current.getMatricula());
+        System.out.println("Fecha Ingreso: "+this.current.getFechaIngreso());
+        System.out.println("Materia: "+this.materia.getMateria());
+        System.out.println("Profesor: "+this.materia.getIdProfesor().getIdPersona().getNombre());
+        
+        persona.setIdColonia(colonia);
+        alumnoMateria.setIdAlumno(current);
+        alumnoMateria.setIdMateria(materia);
+        alumnosMateriasList.add(alumnoMateria);
+        current.setIdPersona(persona);
+        current.setAlumnosMateriasList(alumnosMateriasList);
+        this.create();
     }
-
+    
+//    public void agregarMateria(){
+//        alumnoMateria.setIdAlumno(current);
+//        alumnoMateria.setIdMateria(materia);
+//        alumnosMateriasList.add(alumnoMateria);
+//        alumnoMateria = new AlumnosMaterias();
+//    }
+    
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -84,7 +126,10 @@ public class AlumnosController implements Serializable {
 
     public String prepareCreate() {
         current = new Alumnos();
+        persona = new Personas();
+        materia = new Materias();        
         selectedItemIndex = -1;
+        
         return "Create";
     }
 
@@ -242,7 +287,13 @@ public class AlumnosController implements Serializable {
     }
 
         // Entity References
-    public Personas getPersona() { return persona; }
+    public Personas getPersona() {
+        if (this.persona == null) {
+            persona = new Personas();
+        }
+        return persona;
+    }
+                
     public void setPersona(Personas persona) { this.persona = persona; }
     public Paises getPais() { return pais; }
     public void setPais(Paises pais) { this.pais = pais; }
@@ -252,8 +303,10 @@ public class AlumnosController implements Serializable {
     public void setMunicipio(Municipios municipio) { this.municipio = municipio; }
     public Colonias getColonia() { return colonia; }
     public void setColonia(Colonias colonia) { this.colonia = colonia; }
-
     private AlumnosFacade getFacade() { return alumnoEJB; }
+    public Materias getMateria() { return materia; }
+    public void setMateria(Materias materia) { this.materia = materia; }
+
     
     public Alumnos getSelected() {
         if (current == null) {
@@ -261,9 +314,5 @@ public class AlumnosController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
-    }
-
-    
-    
-    
+    } 
 }

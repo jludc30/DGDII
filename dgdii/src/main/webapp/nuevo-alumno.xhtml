@@ -46,27 +46,27 @@
                                       readonlyInput="true" showIcon="true" locale="es" pattern="yyyy-MM-dd"
                                       showOnFocus="false" monthNavigator="true" yearNavigator="true" yearRange="1950:2050"/>
                         <p:outputLabel value="Sexo: "/>
-                        <p:selectOneRadio id="new_sexo" value="#{alumnosController.persona.sexo}" required="true" requiredMessage="POR FAVOR selecciona tu sexo">
+                        <p:selectOneRadio id="new_sexo" value="#{alumnosController.persona.sexo}" required="true" requiredMessage="POR FAVOR SELECCIONA TU SEXO">                            
                             <f:selectItem itemLabel="F" itemValue="0"/>
                             <f:selectItem itemLabel="M" itemValue="1"/>
                         </p:selectOneRadio>
                     </h:panelGrid>
                 </p:panel>
             </center>
-            
+
             <center>
                 <p:panel header="Direccion " id="id_datos_direccion_alumno" style="width: 80% ">
                     <h:panelGrid columns="8">
-                        
+
                         <p:outputLabel value="Pais: "/>
                         <p:selectOneMenu id="cat_pais" value="#{alumnosController.pais}" filter="true" filterMatchMode="contains"
                                          required="true" requiredMessage="INGRESA TU PAIS: ">
                             <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{paisesController.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{paisesController.itemsAvailableSelectMany}"/>
                             <p:ajax event="change" process="@this cat_pais" update="cat_estados"
                                     listener="#{estadosController.findEstadoByPais}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel value="Estado: "/>
                         <p:selectOneMenu id="cat_estados" value="#{alumnosController.estado}" filter="true" filterMatchMode="contains"
                                          required="true" requiredMessage="INGRESA TU ESTADO: ">
@@ -77,7 +77,7 @@
                                     update="cat_municipios"
                                     listener="#{municipiosController.findMunicipiosById}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel value="Municipio: "/>
                         <p:selectOneMenu id="cat_municipios" value="#{alumnosController.municipio}" filter="true" filterMatchMode="contains"
                                          required="true" requiredMessage="INGRESA TU MUNICIPIO: ">
@@ -88,18 +88,59 @@
                                     update="cat_colonias"
                                     listener="#{coloniasController.findColoniasByMunicipioId}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel value="Colonia: "/>
-                        <p:selectOneMenu id="cat_colonias" value="#{alumnosController.persona.idColonia}" filter="true" filterMatchMode="contains"
+                        <p:selectOneMenu id="cat_colonias" value="#{alumnosController.colonia}" filter="true" filterMatchMode="contains"
                                          required="true" requiredMessage="INGRESA TU COLONIA: ">
                             <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{coloniasController.itemsColoniasList}"/>
                         </p:selectOneMenu>
                     </h:panelGrid>
                 </p:panel>
-                
             </center>
-            
+            <center>
+                <p:panel header="Datos Academicos: " id="id_datos_academicos_alumno" style="width: 80%">
+                    <h:panelGrid columns="4">
+                        <h:outputLabel value="Matricula: "/>
+                        <p:inputText id="new_matricula" label="new_matricula" value="#{alumnosController.selected.matricula}"                                    
+                                     required ="true" requiredMessage="POR FAVOR ESCRIBA SU MATRICULA"
+                                     validatorMessage="NO SE PERMITEN LETRAS, NI CARACTERES ESPECIALES NI ACENTOS EN LA MATRICULA, SOLO NUMEROS"> 
+                            <f:validateRegex pattern = "^\d{6}$"/>
+                        </p:inputText>
+                        <h:outputLabel value="Fecha de ingreso: "/>
+                        <p:datePicker id="id_fIngreso" value="#{alumnosController.selected.fechaIngreso}"
+                                      readonlyInput="true" showIcon="true" locale="es" pattern="yyyy-MM-dd"
+                                      showOnFocus="false" monthNavigator="true" yearNavigator="true" yearRange="2024:2050"/>                
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            <center>
+                <p:panel header="Materias y profesores: " id="id_datos_materias_alumno" style="width: 80% ">
+                    <h:panelGrid columns="4">
+                        <p:outputLabel value="Materia: "/>
+                        <p:selectOneMenu id="cat_materias" value="#{alumnosController.materia}" filter="true" filterMatchMode="contains"
+                                         required="true" requiredMessage="INGRESA UNA MATERIA: ">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{materiasController.itemsAvailableSelectMany}"/>
+                            <p:ajax event="change"
+                                    process="@this cat_materias"
+                                    update="new_profesor"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Profesor: "/>
+                        <p:inputTextarea id="new_profesor" label="new_profesor" value="#{alumnosController.materia.idProfesor.idPersona.nombre} #{alumnosController.materia.idProfesor.idPersona.apaterno} #{alumnosController.materia.idProfesor.idPersona.amaterno} #{alumnosController.materia.idProfesor.numeroControl}" 
+                                         readonly="true"/>
+                    </h:panelGrid>
+                </p:panel>  
+                
+                <center >
+                    <p:commandButton id="id_guardar_alumno"
+                                     value="Registra Alumno" 
+                                     update="@form"
+                                     process="@form"
+                                     action="#{alumnosController.guardarAlumno}"/>
+                </center> 
+            </center> 
         </h:form>
     </h:body>
 </html>

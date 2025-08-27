@@ -4,7 +4,6 @@ import com.dgdii.models.Profesores;
 import com.dgdii.controllers.util.JsfUtil;
 import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.ProfesoresFacade;
-
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -24,8 +23,7 @@ public class ProfesoresController implements Serializable {
 
     private Profesores current;
     private DataModel items = null;
-    @EJB
-    private com.dgdii.ejb.ProfesoresFacade ejbFacade;
+    @EJB private com.dgdii.ejb.ProfesoresFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
