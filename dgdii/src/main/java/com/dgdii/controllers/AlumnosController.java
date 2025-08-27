@@ -36,7 +36,7 @@ public class AlumnosController implements Serializable {
     private Municipios municipio;
     private Colonias colonia;
     private List<AlumnosMaterias> alumnosMateriasList = null;
-    
+    private List<Materias> materias = null;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private DataModel items = null;
@@ -88,12 +88,22 @@ public class AlumnosController implements Serializable {
         this.create();
     }
     
-//    public void agregarMateria(){
-//        alumnoMateria.setIdAlumno(current);
-//        alumnoMateria.setIdMateria(materia);
-//        alumnosMateriasList.add(alumnoMateria);
-//        alumnoMateria = new AlumnosMaterias();
-//    }
+    public void agregarMateriaList(Materias materia) {
+        this.materia = materia;
+        System.out.println("Agregando materia: " + this.materia.getMateria());
+
+        if (materia != null) {
+            AlumnosMaterias am = new AlumnosMaterias();
+            am.setIdAlumno(current);   
+            am.setIdMateria(materia);
+            alumnosMateriasList.add(am);
+        }
+    }
+    
+    public void eliminarMateriaList(AlumnosMaterias am){     
+        alumnosMateriasList.remove(am);
+        System.out.println("Materia eliminada: "+am.getIdMateria().getMateria());
+    }
     
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -307,6 +317,23 @@ public class AlumnosController implements Serializable {
     public Materias getMateria() { return materia; }
     public void setMateria(Materias materia) { this.materia = materia; }
 
+    public List<AlumnosMaterias> getAlumnosMateriasList() {
+        return alumnosMateriasList;
+    }
+
+    public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) {
+        this.alumnosMateriasList = alumnosMateriasList;
+    }
+
+    public List<Materias> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(List<Materias> materias) {
+        this.materias = materias;
+    }
+    
+    
     
     public Alumnos getSelected() {
         if (current == null) {

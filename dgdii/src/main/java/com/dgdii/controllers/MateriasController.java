@@ -6,7 +6,10 @@ import com.dgdii.controllers.util.PaginationHelper;
 import com.dgdii.ejb.MateriasFacade;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -28,7 +31,13 @@ public class MateriasController implements Serializable {
     private com.dgdii.ejb.MateriasFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Materias> materias = Collections.emptyList();
 
+    @PostConstruct
+    public void init(){
+        materias = ejbFacade.findAll();
+    }
+    
     public MateriasController() {
     }
 
@@ -231,5 +240,15 @@ public class MateriasController implements Serializable {
         }
 
     }
+
+    public List<Materias> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(List<Materias> materias) {
+        this.materias = materias;
+    }
+    
+    
 
 }

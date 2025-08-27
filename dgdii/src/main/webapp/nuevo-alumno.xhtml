@@ -115,32 +115,66 @@
                 </p:panel>
             </center>
             <center>
-                <p:panel header="Materias y profesores: " id="id_datos_materias_alumno" style="width: 80% ">
-                    <h:panelGrid columns="4">
-                        <p:outputLabel value="Materia: "/>
-                        <p:selectOneMenu id="cat_materias" value="#{alumnosController.materia}" filter="true" filterMatchMode="contains"
-                                         required="true" requiredMessage="INGRESA UNA MATERIA: ">
-                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{materiasController.itemsAvailableSelectMany}"/>
-                            <p:ajax event="change"
-                                    process="@this cat_materias"
-                                    update="new_profesor"/>
-                        </p:selectOneMenu>
+                <p:panel header="Materias y profesores" id="id_tira_materias" style="width: 80% ">
 
-                        <p:outputLabel value="Profesor: "/>
-                        <p:inputTextarea id="new_profesor" label="new_profesor" value="#{alumnosController.materia.idProfesor.idPersona.nombre} #{alumnosController.materia.idProfesor.idPersona.apaterno} #{alumnosController.materia.idProfesor.idPersona.amaterno} #{alumnosController.materia.idProfesor.numeroControl}" 
-                                         readonly="true"/>
-                    </h:panelGrid>
-                </p:panel>  
-                
-                <center >
-                    <p:commandButton id="id_guardar_alumno"
-                                     value="Registra Alumno" 
-                                     update="@form"
-                                     process="@form"
-                                     action="#{alumnosController.guardarAlumno}"/>
-                </center> 
+                    <p:dataTable id="materias-table" var="materia" 
+                                 value="#{materiasController.materias}">
+                        <f:facet name="header">
+                            Materias
+                        </f:facet>
+                        <p:column headerText="Materia">
+                            <h:outputText value="#{materia.materia}" />
+                        </p:column>
+                        <p:column headerText="Profesor">
+                            <h:outputText value="#{materia.idProfesor.idPersona.nombre} #{materia.idProfesor.idPersona.apaterno} #{materia.idProfesor.idPersona.amaterno}" />
+                        </p:column>
+                        <p:column headerText="Escoge">
+                            <p:commandButton value="Agregar"
+                                             process="@this"
+                                             update=":form_nuevo_alumno:wrapSeleccionados"
+                                             actionListener="#{alumnosController.agregarMateriaList(materia)}">
+                                <f:setPropertyActionListener value="#{materia}" target="#{alumnosController.materia}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:panel>
+            </center>
+
+            <center>
+                <p:panel id="id_materias_seleccionadas" style="width: 80%">
+                    <!-- <<< WRAPPER A ACTUALIZAR >>> -->
+                    <h:panelGroup id="wrapSeleccionados">
+                        <p:dataTable id="seleccionados" var="am"
+                                     value="#{alumnosController.alumnosMateriasList}">
+                            <f:facet name="header">Materias Escogidas:</f:facet>
+
+                            <p:column headerText="Materia">
+                                <h:outputText value="#{am.idMateria.materia}" />
+                            </p:column>
+                            <p:column headerText="Profesor">
+                                <h:outputText value="#{am.idMateria.idProfesor.idPersona.nombre} #{am.idMateria.idProfesor.idPersona.apaterno} #{am.idMateria.idProfesor.idPersona.amaterno}" />
+                            </p:column>
+                            <p:column headerText="Quitar">
+                                <p:commandButton value="Quitar"
+                                                 actionListener="#{alumnosController.eliminarMateriaList(am)}"
+                                                 update=":form_nuevo_alumno:wrapSeleccionados"
+                                                 process="@this"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </p:panel>
+            </center>
+
+
+            <center >
+                <p:commandButton id="id_guardar_alumno"
+                                 value="Registra Alumno" 
+                                 update="@form"
+                                 process="@form"
+                                 action="#{alumnosController.guardarAlumno}"/>
             </center> 
+
         </h:form>
     </h:body>
 </html>
