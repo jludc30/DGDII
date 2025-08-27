@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -57,6 +58,8 @@ public class AlumnosController implements Serializable {
         }
         if (alumnosMateriasList == null) {
             alumnosMateriasList = new ArrayList<>();
+        }
+        if (materias == null) {
             materias = new HashSet<>();
         }
         System.out.println("Se inicia PostConstructor");
@@ -65,55 +68,87 @@ public class AlumnosController implements Serializable {
     public AlumnosController() {
     }
 
-    public void guardarAlumno(){
+    public void guardarAlumno() {
+
+        // valida que haya al menos una materia
+        if (alumnosMateriasList == null || alumnosMateriasList.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Falta seleccionar materias",
+                            "Debes agregar al menos una materia."));
+            // marca la validación como fallida para que PrimeFaces no “avance”
+            FacesContext.getCurrentInstance().validationFailed();
+            return; // permanecer en la misma vista
+        }
+        //Ai ya hay materias, entonces ya hacemos todo esto
+
         System.out.println("Loading...");
-        System.out.println("Alumno: ");   
-        System.out.println("Nombre: "+this.persona.getNombre());
-        System.out.println("Apellido Paterno: "+this.persona.getApaterno());
-        System.out.println("Apellido Materno : "+this.persona.getAmaterno());
-        System.out.println("Sexo: "+this.persona.getSexo());
-        System.out.println("Fecha Nacimiento: "+this.persona.getFechaNacimiento());
-        System.out.println("Colonia: "+this.colonia.getColonia());
-        System.out.println("Municipio: "+this.municipio.getMunicipio());
-        System.out.println("Estado: "+this.estado.getEstado());
-        System.out.println("Pais: "+this.pais.getPais());     
-        System.out.println("Matricula: "+this.current.getMatricula());
-        System.out.println("Fecha Ingreso: "+this.current.getFechaIngreso());
-        System.out.println("Materia: "+this.materia.getMateria());
-        System.out.println("Profesor: "+this.materia.getIdProfesor().getIdPersona().getNombre());
-        
+        System.out.println("Alumno: ");
+        System.out.println("Nombre: " + this.persona.getNombre());
+        System.out.println("Apellido Paterno: " + this.persona.getApaterno());
+        System.out.println("Apellido Materno : " + this.persona.getAmaterno());
+        System.out.println("Sexo: " + this.persona.getSexo());
+        System.out.println("Fecha Nacimiento: " + this.persona.getFechaNacimiento());
+        System.out.println("Colonia: " + this.colonia.getColonia());
+        System.out.println("Municipio: " + this.municipio.getMunicipio());
+        System.out.println("Estado: " + this.estado.getEstado());
+        System.out.println("Pais: " + this.pais.getPais());
+        System.out.println("Matricula: " + this.current.getMatricula());
+        System.out.println("Fecha Ingreso: " + this.current.getFechaIngreso());
+        System.out.println("Materia: " + this.materia.getMateria());
+        System.out.println("Profesor: " + this.materia.getIdProfesor().getIdPersona().getNombre());
+
         persona.setIdColonia(colonia);
-        alumnoMateria.setIdAlumno(current);
-        alumnoMateria.setIdMateria(materia);
-        alumnosMateriasList.add(alumnoMateria);
         current.setIdPersona(persona);
         current.setAlumnosMateriasList(alumnosMateriasList);
+
         this.create();
     }
     
+    /**
+     * 
+     * @param materia Es la materia que capturamos al darle click en el front de agregar materia
+     */
     public void agregarMateriaList(Materias materia) {
-        Integer mid = materia.getIdMateria();
-        if (materia != null && materias.contains(mid)) {
+        Integer mid = materia.getIdMateria(); //Aqui solo guardamos el Id de la materia que capturamos para comparar en el set
+        
+        if (materia != null && materias.contains(mid)) { //Aqui solo verificamos si el id de la materia ya existe en el set
+            
+            FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "Materia ya agregada a la tira de materias",
+                "No puedes agregar la misma materia"));
+        // marca la validación como fallida para que PrimeFaces no “avance”
+        FacesContext.getCurrentInstance().validationFailed();
+            
             System.out.println("Ya existe en la lista");
-            return;
+            return; //retornamos para que se salga del metodo y no siga con el codigo
         }
        
+        //Si el id de la materia no estaba en el set, entonces agregamos a la lista
         AlumnosMaterias am = new AlumnosMaterias();
         am.setIdAlumno(current);    // puede ser null en UI, no pasa nada
         am.setIdMateria(materia);
         alumnosMateriasList.add(am);
         
+        //Y ademas agregamos el id al set, para las verificaciones
         if (mid != null) {
             materias.add(mid);
         }
-
+        JsfUtil.addSuccessMessage("Materia agregada a la tira de materias");
     }
     
+    /**
+     * 
+     * @param am es el objeto de tipo AlumnosMaterias, donde capturamos la materia que quiere eliminar
+     * la atrapamos desde el frontend en la tabla de materias seleccionadas
+     */
     public void eliminarMateriaList(AlumnosMaterias am){  
         Integer mid = am.getIdMateria().getIdMateria();
         alumnosMateriasList.remove(am);
         materias.remove(mid);
         System.out.println("Materia eliminada: "+am.getIdMateria().getMateria());
+        JsfUtil.addSuccessMessage("Materia eliminada de la tira de materias");
     }
     
     public PaginationHelper getPagination() {
@@ -148,9 +183,15 @@ public class AlumnosController implements Serializable {
     public String prepareCreate() {
         current = new Alumnos();
         persona = new Personas();
-        materia = new Materias();        
+        materia = new Materias();
+        alumnoMateria = new AlumnosMaterias();
+        materias = new HashSet<>();
+        alumnosMateriasList = new ArrayList<>();
+        pais = new Paises();
+        estado = new Estados();
+        municipio = new Municipios();
+        colonia = new Colonias();
         selectedItemIndex = -1;
-        
         return "Create";
     }
 
