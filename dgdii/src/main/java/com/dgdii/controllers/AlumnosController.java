@@ -44,6 +44,7 @@ public class AlumnosController implements Serializable {
     private int selectedItemIndex;
     private DataModel items = null;
     
+    //PostConstructor donde inicilizaremos nuestros objetos
     @PostConstruct
     public void init() {
         if (persona == null) {
@@ -68,6 +69,9 @@ public class AlumnosController implements Serializable {
     public AlumnosController() {
     }
 
+    /**
+     * Metodo que nos ayuda a guardar las materias en una lista, para despues asignarlas en el la lista que tiene cada alumno, para persistir en la tabla, AlumnosMaterias
+     */
     public void guardarAlumno() {
 
         // valida que haya al menos una materia
@@ -80,8 +84,8 @@ public class AlumnosController implements Serializable {
             FacesContext.getCurrentInstance().validationFailed();
             return; // permanecer en la misma vista
         }
-        //Ai ya hay materias, entonces ya hacemos todo esto
-
+        //Ahi ya hay materias, entonces ya hacemos todo esto
+        //Solo imprimimos esto en consola para validar que es lo que queremos
         System.out.println("Loading...");
         System.out.println("Alumno: ");
         System.out.println("Nombre: " + this.persona.getNombre());
@@ -97,7 +101,7 @@ public class AlumnosController implements Serializable {
         System.out.println("Fecha Ingreso: " + this.current.getFechaIngreso());
         System.out.println("Materia: " + this.materia.getMateria());
         System.out.println("Profesor: " + this.materia.getIdProfesor().getIdPersona().getNombre());
-
+        //Asignamos los valores que le faltan al alumno
         persona.setIdColonia(colonia);
         current.setIdPersona(persona);
         current.setAlumnosMateriasList(alumnosMateriasList);
@@ -176,6 +180,7 @@ public class AlumnosController implements Serializable {
         return "View";
     }
 
+    //Nos ayuda a eliminar los datos del antiguo registro para poder empezar uno nuevo
     public String prepareCreate() {
         current = new Alumnos();
         persona = new Personas();
