@@ -111,26 +111,21 @@ public class AlumnosController implements Serializable {
      */
     public void agregarMateriaList(Materias materia) {
         Integer mid = materia.getIdMateria(); //Aqui solo guardamos el Id de la materia que capturamos para comparar en el set
-        
+
         if (materia != null && materias.contains(mid)) { //Aqui solo verificamos si el id de la materia ya existe en el set
-            
-            FacesContext.getCurrentInstance().addMessage(null,
-            new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Materia ya agregada a la tira de materias",
-                "No puedes agregar la misma materia"));
-        // marca la validación como fallida para que PrimeFaces no “avance”
-        FacesContext.getCurrentInstance().validationFailed();
-            
+
             System.out.println("Ya existe en la lista");
+            JsfUtil.addErrorMessage("Materia repetida");
             return; //retornamos para que se salga del metodo y no siga con el codigo
+            
         }
-       
+
         //Si el id de la materia no estaba en el set, entonces agregamos a la lista
         AlumnosMaterias am = new AlumnosMaterias();
         am.setIdAlumno(current);    // puede ser null en UI, no pasa nada
         am.setIdMateria(materia);
         alumnosMateriasList.add(am);
-        
+
         //Y ademas agregamos el id al set, para las verificaciones
         if (mid != null) {
             materias.add(mid);
@@ -149,6 +144,7 @@ public class AlumnosController implements Serializable {
         materias.remove(mid);
         System.out.println("Materia eliminada: "+am.getIdMateria().getMateria());
         JsfUtil.addSuccessMessage("Materia eliminada de la tira de materias");
+        
     }
     
     public PaginationHelper getPagination() {
@@ -347,15 +343,8 @@ public class AlumnosController implements Serializable {
         }
 
     }
-
-        // Entity References
-    public Personas getPersona() {
-        if (this.persona == null) {
-            persona = new Personas();
-        }
-        return persona;
-    }
-                
+        
+    public Personas getPersona() { return persona; }            
     public void setPersona(Personas persona) { this.persona = persona; }
     public Paises getPais() { return pais; }
     public void setPais(Paises pais) { this.pais = pais; }
@@ -368,14 +357,8 @@ public class AlumnosController implements Serializable {
     private AlumnosFacade getFacade() { return alumnoEJB; }
     public Materias getMateria() { return materia; }
     public void setMateria(Materias materia) { this.materia = materia; }
-
-    public List<AlumnosMaterias> getAlumnosMateriasList() {
-        return alumnosMateriasList;
-    }
-
-    public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) {
-        this.alumnosMateriasList = alumnosMateriasList;
-    }
+    public List<AlumnosMaterias> getAlumnosMateriasList() { return alumnosMateriasList; }
+    public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) { this.alumnosMateriasList = alumnosMateriasList; }
     
     public Alumnos getSelected() {
         if (current == null) {

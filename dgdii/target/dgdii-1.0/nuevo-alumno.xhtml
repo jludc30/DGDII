@@ -115,6 +115,7 @@
                 </p:panel>
             </center>
             <center>
+                <p:growl id="mensaje_materia_repetida" showSummary="false" showDetail="true"/>
                 <p:panel header="Materias y profesores" id="id_tira_materias" style="width: 80% ">
 
                     <p:dataTable id="materias-table" var="materia" 
@@ -131,7 +132,7 @@
                         <p:column headerText="Escoge">
                             <p:commandButton value="Agregar"
                                              process="@this"
-                                             update=":form_nuevo_alumno:wrapSeleccionados"
+                                             update=":form_nuevo_alumno:wrapSeleccionados, :form_nuevo_alumno:mensaje_materia_repetida"
                                              actionListener="#{alumnosController.agregarMateriaList(materia)}">
                                 <f:setPropertyActionListener value="#{materia}" target="#{alumnosController.materia}" />
                             </p:commandButton>
@@ -142,6 +143,7 @@
             </center>
 
             <center>
+                <p:growl id="mensaje_materia_eliminada" showSummary="false" showDetail="true"/>
                 <p:panel id="id_materias_seleccionadas" style="width: 80%">
                     <!-- <<< WRAPPER A ACTUALIZAR >>> -->
                     <h:panelGroup id="wrapSeleccionados">
@@ -158,7 +160,7 @@
                             <p:column headerText="Quitar">
                                 <p:commandButton value="Quitar"
                                                  actionListener="#{alumnosController.eliminarMateriaList(am)}"
-                                                 update=":form_nuevo_alumno:wrapSeleccionados"
+                                                 update=":form_nuevo_alumno:wrapSeleccionados, :form_nuevo_alumno:mensaje_materia_eliminada"
                                                  process="@this"/>
                             </p:column>
                         </p:dataTable>
