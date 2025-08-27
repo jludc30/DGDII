@@ -7,8 +7,10 @@ import com.dgdii.ejb.AlumnosFacade;
 import com.dgdii.models.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -36,7 +38,7 @@ public class AlumnosController implements Serializable {
     private Municipios municipio;
     private Colonias colonia;
     private List<AlumnosMaterias> alumnosMateriasList = null;
-    private List<Materias> materias = null;
+    private Set<Integer> materias = null;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private DataModel items = null;
@@ -55,6 +57,7 @@ public class AlumnosController implements Serializable {
         }
         if (alumnosMateriasList == null) {
             alumnosMateriasList = new ArrayList<>();
+            materias = new HashSet<>();
         }
         System.out.println("Se inicia PostConstructor");
     }
@@ -89,19 +92,27 @@ public class AlumnosController implements Serializable {
     }
     
     public void agregarMateriaList(Materias materia) {
-        this.materia = materia;
-        System.out.println("Agregando materia: " + this.materia.getMateria());
-
-        if (materia != null) {
-            AlumnosMaterias am = new AlumnosMaterias();
-            am.setIdAlumno(current);   
-            am.setIdMateria(materia);
-            alumnosMateriasList.add(am);
+        Integer mid = materia.getIdMateria();
+        if (materia != null && materias.contains(mid)) {
+            System.out.println("Ya existe en la lista");
+            return;
         }
+       
+        AlumnosMaterias am = new AlumnosMaterias();
+        am.setIdAlumno(current);    // puede ser null en UI, no pasa nada
+        am.setIdMateria(materia);
+        alumnosMateriasList.add(am);
+        
+        if (mid != null) {
+            materias.add(mid);
+        }
+
     }
     
-    public void eliminarMateriaList(AlumnosMaterias am){     
+    public void eliminarMateriaList(AlumnosMaterias am){  
+        Integer mid = am.getIdMateria().getIdMateria();
         alumnosMateriasList.remove(am);
+        materias.remove(mid);
         System.out.println("Materia eliminada: "+am.getIdMateria().getMateria());
     }
     
@@ -324,16 +335,6 @@ public class AlumnosController implements Serializable {
     public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) {
         this.alumnosMateriasList = alumnosMateriasList;
     }
-
-    public List<Materias> getMaterias() {
-        return materias;
-    }
-
-    public void setMaterias(List<Materias> materias) {
-        this.materias = materias;
-    }
-    
-    
     
     public Alumnos getSelected() {
         if (current == null) {
