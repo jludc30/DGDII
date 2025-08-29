@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Buscar alumnos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <h:body>
+        <h:form id="form-buscar-alumno">
+            
+            <p:growl showSummary="false" showDetail="true"/>
+            <center>
+                <p:panel id="datos-personales-buscar" header="Datos personales" style="width: 90%">
+                    <h:panelGrid columns="6">
+                        <p:outputLabel value="Nombre: "/>
+                        <p:inputText id="nombre-busqueda" label="nombre-busqueda" value="#{alumnosController.persona.nombre}"
+                                     onblur="this.value = this.value.toUpperCase()">
+                            <f:validateRegex pattern="^$|^[A-Za-zÑñ]+(?:\s[A-Za-zÑñ]+)*$"/>
+                            <f:validateBean disabled="true"/>
+                        </p:inputText>
+                        <p:outputLabel value="Apellido Paterno "/>
+                        <p:inputText id="apaterno-busqueda" label="apaterno-busqueda" value="#{alumnosController.persona.apaterno}"
+                                     onblur="this.value = this.value.toUpperCase()">                     
+                            <f:validateRegex pattern="^$|^[A-Za-zÑñ]+(?:\s[A-Za-zÑñ]+)*$"/>
+                            <f:validateBean disabled="true"/>
+                        </p:inputText>
+                        <p:outputLabel value="Apellido Materno "/>
+                        <p:inputText id="amaterno-busqueda" label="amaterno-busqueda" value="#{alumnosController.persona.amaterno}"
+                                     onblur="this.value = this.value.toUpperCase()">
+                            <f:validateRegex pattern="^$|^[A-Za-zÑñ]+(?:\s[A-Za-zÑñ]+)*$"/>
+                            <f:validateBean disabled="true"/>
+                        </p:inputText>
+                        <p:outputLabel value="Sexo: "/>
+                        <p:selectOneRadio id="sexo-busqueda" value="#{alumnosController.persona.sexo}">
+                            <f:selectItem itemLabel="F" itemValue="0"/>
+                            <f:selectItem itemLabel="M" itemValue="1"/>
+                            <f:validateBean disabled="true"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="Matricula: "/>
+                        <p:inputText id="matricula-busqueda" label="matricula-busqueda" value="#{alumnosController.selected.matricula}"
+                                     onblur="this.value = this.value.toUpperCase()">
+                        <f:validateBean disabled="true"/>
+                        </p:inputText>                                    
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            <center>
+                <p:panel id="datos-direccion-alumnos" header="Direccion" style="width: 90%">
+                    <h:panelGrid columns="8">
+                        <p:outputLabel value="Pais: "/>
+                        <p:selectOneMenu id="cat_pais" value="#{alumnosController.pais}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{paisesController.itemsAvailableSelectMany}"/>
+                            <p:ajax event="change" process="@this cat_pais" update="cat_estados"
+                                    listener="#{estadosController.findEstadoByPais}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Estado: "/>
+                        <p:selectOneMenu id="cat_estados" value="#{alumnosController.estado}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{estadosController.itemsEstadosList}"/>
+                            <p:ajax event="change"
+                                    process="@this cat_estados"
+                                    update="cat_municipios"
+                                    listener="#{municipiosController.findMunicipiosById}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Municipio: "/>
+                        <p:selectOneMenu id="cat_municipios" value="#{alumnosController.municipio}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{municipiosController.itemsMunicipiosList}"/>
+                            <p:ajax event="change"
+                                    process="@this cat_municipios"
+                                    update="cat_colonias"
+                                    listener="#{coloniasController.findColoniasByMunicipioId}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Colonia: "/>
+                        <p:selectOneMenu id="cat_colonias" value="#{alumnosController.colonia}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{coloniasController.itemsColoniasList}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            <center>
+                <p:panel id="datos-materias-alumnos" header="Materias" style="width: 90%">
+                    <h:panelGrid columns="6">
+                        <p:outputLabel value="Materia: "/>
+                        <p:selectOneMenu id="select-materias" value="#{alumnosController.materia}">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{materiasController.itemsAvailableSelectMany}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            <center>
+                <p:commandButton value="Buscar" action="#{alumnosController.buscarAlumno}" 
+                                 process=":form-buscar-alumno"
+                                 update="@form"/>
+            </center>
+        </h:form>
+    </h:body>
+</html>

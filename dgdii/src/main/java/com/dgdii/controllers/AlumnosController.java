@@ -109,6 +109,10 @@ public class AlumnosController implements Serializable {
         this.create();
     }
     
+    public void buscarAlumno(){
+        System.out.println("Buscando...");
+    }
+    
     /**
      * 
      * @param materia Es la materia que capturamos al darle click en el front de agregar materia
