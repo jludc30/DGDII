@@ -63,6 +63,18 @@ public class AlumnosController implements Serializable {
         if (materias == null) {
             materias = new HashSet<>();
         }
+        if (colonia == null) {
+            colonia = new Colonias();
+        }
+        if(pais == null){
+            pais = new Paises();
+        }
+        if(estado == null){
+            estado = new Estados();
+        }
+        if (municipio == null) {
+            municipio = new Municipios();
+        }
         System.out.println("Se inicia PostConstructor");
     }
     
@@ -110,7 +122,27 @@ public class AlumnosController implements Serializable {
     }
     
     public void buscarAlumno(){
+        System.out.println("*******************************************");
         System.out.println("Buscando...");
+        System.out.println("Datos Personales: ");
+        System.out.println("Nombre: "+this.persona.getNombre());
+        System.out.println("Apellido Paterno: "+this.persona.getApaterno());
+        System.out.println("Apellido Paterno: "+this.persona.getAmaterno());
+        System.out.println("Sexo: "+this.persona.getSexo());
+        System.out.println("Datos Academicos: ");
+        System.out.println("Matricula: "+this.current.getMatricula());
+        System.out.println("Direccion: ");
+        System.out.println(this.colonia == null ? "Colonia: null" : "Colonia: "+this.colonia);
+        System.out.println(this.municipio == null ? "Municipio: null" : "Municipio: "+this.municipio);
+        System.out.println(this.estado == null ? "Estado: null" : "Estado: "+this.estado);
+        System.out.println(this.pais == null ? "Pais: null" : "Pais: "+this.pais);
+        System.out.println("Datos Materias: ");
+        System.out.println(this.materia == null ? "Materia: null "+"\nProfesor: null" : "Materia: " + this.materia.getMateria() +"\nProfesor: "
+                         + this.materia.getIdProfesor().getIdPersona().getNombre());      
+    }
+    
+    public void validarDatos(String str, Materias materia, Integer... numeros){
+        
     }
     
     /**
