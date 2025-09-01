@@ -39,6 +39,7 @@ public class AlumnosController implements Serializable {
     private Municipios municipio;
     private Colonias colonia;
     private List<AlumnosMaterias> alumnosMateriasList = null;
+    private List<Alumnos> alumnos = null;
     private Set<Integer> materias = null;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -139,11 +140,14 @@ public class AlumnosController implements Serializable {
         System.out.println("Datos Materias: ");
         System.out.println(this.materia == null ? "Materia: null "+"\nProfesor: null" : "Materia: " + this.materia.getMateria() +"\nProfesor: "
                          + this.materia.getIdProfesor().getIdPersona().getNombre());      
+        alumnos = alumnoEJB.findAlumnosByCriteria(persona, current, materia, pais, estado, municipio, colonia);
+        for(Alumnos a : alumnos){
+            System.out.println("Nombre: " + a.getIdPersona().getNombre() + " " +
+                       a.getIdPersona().getApaterno() + " " +
+                       a.getIdPersona().getAmaterno());
+        }
     }
-    
-    public void validarDatos(String str, Materias materia, Integer... numeros){
-        
-    }
+   
     
     /**
      * 
