@@ -58,8 +58,10 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
             sb.append(persona.getAmaterno() != null ? "AND per.amaterno = :amaterno " : "");
         }
        // sb.append(alumno != null ? "AND a.matricula = "+alumno.getMatricula()+" " : "");              
-        sb.append(materia != null ? "AND mat.idMateria = idMateria " : "");
+        sb.append(materia != null ? "AND mat.idMateria = :idMateria " : "");
                 
+       sb.append("ORDER BY a.idAlumno");
+        
         String string = sb.toString();
         System.out.println(string);
         

@@ -404,6 +404,8 @@ public class AlumnosController implements Serializable {
     public void setMateria(Materias materia) { this.materia = materia; }
     public List<AlumnosMaterias> getAlumnosMateriasList() { return alumnosMateriasList; }
     public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) { this.alumnosMateriasList = alumnosMateriasList; }
+    public List<Alumnos> getAlumnos() { return alumnos; }
+    public void setAlumnos(List<Alumnos> alumnos) { this.alumnos = alumnos; }   
     
     public Alumnos getSelected() {
         if (current == null) {
