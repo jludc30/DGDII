@@ -26,7 +26,6 @@ public class EstadosFacade extends AbstractFacade<Estados> {
         String query = "SELECT e "
                 + "FROM Estados e "
                 + "WHERE e.idPais.idPais=:idPais";
-        System.out.println(query+"idPais: "+idPais);
         return em.createQuery(query, Estados.class).setParameter("idPais", idPais).getResultList();
     }
     

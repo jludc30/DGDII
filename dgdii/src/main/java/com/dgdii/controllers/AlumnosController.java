@@ -38,8 +38,10 @@ public class AlumnosController implements Serializable {
     private Estados estado;
     private Municipios municipio;
     private Colonias colonia;
+    private Integer edad;
     private List<AlumnosMaterias> alumnosMateriasList = null;
     private List<Alumnos> alumnos = null;
+    private List<Integer> edades = new ArrayList<>();
     private Set<Integer> materias = null;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -75,8 +77,9 @@ public class AlumnosController implements Serializable {
         }
         if (municipio == null) {
             municipio = new Municipios();
-        }
-        System.out.println("Se inicia PostConstructor");
+        } 
+
+        this.fillEdadesList();
     }
     
     public AlumnosController() {
@@ -130,6 +133,7 @@ public class AlumnosController implements Serializable {
         System.out.println("Apellido Paterno: "+this.persona.getApaterno());
         System.out.println("Apellido Paterno: "+this.persona.getAmaterno());
         System.out.println("Sexo: "+this.persona.getSexo());
+        System.out.println("Edad: "+this.edad);
         System.out.println("Datos Academicos: ");
         System.out.println("Matricula: "+this.current.getMatricula());
         System.out.println("Direccion: ");
@@ -140,7 +144,7 @@ public class AlumnosController implements Serializable {
         System.out.println("Datos Materias: ");
         System.out.println(this.materia == null ? "Materia: null "+"\nProfesor: null" : "Materia: " + this.materia.getMateria() +"\nProfesor: "
                          + this.materia.getIdProfesor().getIdPersona().getNombre());      
-        alumnos = alumnoEJB.findAlumnosByCriteria(persona, current, materia, pais, estado, municipio, colonia);
+        alumnos = alumnoEJB.findAlumnosByCriteria(persona, current, materia, pais, estado, municipio, colonia, edad);
         for(Alumnos a : alumnos){
             System.out.println("Nombre: " + a.getIdPersona().getNombre() + " " +
                        a.getIdPersona().getApaterno() + " " +
@@ -189,6 +193,14 @@ public class AlumnosController implements Serializable {
         System.out.println("Materia eliminada: "+am.getIdMateria().getMateria());
         JsfUtil.addSuccessMessage("Materia eliminada de la tira de materias");
         
+    }
+    
+    //Metodo para llenar la lista de edades 
+    public List<Integer> fillEdadesList(){
+        for (int i = 0; i <= 100; i++) {
+            edades.add(i);
+        }
+        return edades;
     }
     
     public PaginationHelper getPagination() {
@@ -405,7 +417,12 @@ public class AlumnosController implements Serializable {
     public List<AlumnosMaterias> getAlumnosMateriasList() { return alumnosMateriasList; }
     public void setAlumnosMateriasList(List<AlumnosMaterias> alumnosMateriasList) { this.alumnosMateriasList = alumnosMateriasList; }
     public List<Alumnos> getAlumnos() { return alumnos; }
-    public void setAlumnos(List<Alumnos> alumnos) { this.alumnos = alumnos; }   
+    public void setAlumnos(List<Alumnos> alumnos) { this.alumnos = alumnos; } 
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+    public List<Integer> getEdades() { return edades; }
+    public void setEdades(List<Integer> edades) { this.edades = edades; }
+    
     
     public Alumnos getSelected() {
         if (current == null) {

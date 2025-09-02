@@ -1,6 +1,8 @@
 package com.dgdii.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -21,6 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personas.findByAmaterno", query = "SELECT p FROM Personas p WHERE p.amaterno = :amaterno"),
     @NamedQuery(name = "Personas.findByFechaNacimiento", query = "SELECT p FROM Personas p WHERE p.fechaNacimiento = :fechaNacimiento"),
     @NamedQuery(name = "Personas.findBySexo", query = "SELECT p FROM Personas p WHERE p.sexo = :sexo")})
+
 public class Personas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +63,19 @@ public class Personas implements Serializable {
     private List<Alumnos> alumnosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona", fetch = FetchType.LAZY)
     private List<Profesores> profesoresList;
+    
+    @Transient
+    private Integer edad;
 
+    @Transient //Metodo para poder calcular la edad actual de una persona
+    public Integer getEdad() {
+        if (fechaNacimiento == null) return null;
+            LocalDate nacimiento = fechaNacimiento.toInstant()
+                .atZone(java.time.ZoneId.systemDefault())
+                .toLocalDate();
+            return Period.between(nacimiento, LocalDate.now()).getYears();
+    }
+    
     public Personas() {
     }
 

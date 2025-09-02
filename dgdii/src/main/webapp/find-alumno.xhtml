@@ -46,7 +46,15 @@
                         <p:inputText id="matricula-busqueda" label="matricula-busqueda" value="#{alumnosController.selected.matricula}"
                                      onblur="this.value = this.value.toUpperCase()">
                             <f:validateBean disabled="true"/>
-                        </p:inputText>                                    
+                        </p:inputText>
+                        <p:outputLabel value="Apartir de esta edad:  "/>
+                        <p:selectOneMenu id="busqueda-edad" value="#{alumnosController.edad}">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{alumnosController.edades}" 
+                                           var="edad"
+                                           itemLabel="#{edad}"
+                                           itemValue="#{edad}"/>
+                        </p:selectOneMenu>
                     </h:panelGrid>
                 </p:panel>
             </center>
@@ -124,7 +132,7 @@
                         <p:column headerText="Nombre "> <h:outputText value="#{alumno.idPersona.nombre}" /></p:column>         
                         <p:column headerText="Apellido Paterno "><h:outputText value="#{alumno.idPersona.apaterno}" /></p:column>
                         <p:column headerText="Apellido Materno "><h:outputText value="#{alumno.idPersona.amaterno}" /></p:column>
-                        <!--<p:column headerText="Edad "><h:outputText value="#{alumno.edad}" /></p:column>-->
+                        <p:column headerText="Edad "><h:outputText value="#{alumno.idPersona.edad}" /></p:column>
                         <p:column headerText="Sexo "><h:outputText value="#{alumno.idPersona.sexo == 0 ? 'Mujer' : 'Hombre'}" /></p:column> 
                         <p:column headerText="Colonia "><h:outputText value="#{alumno.idPersona.idColonia.colonia}" /></p:column>   
                         <p:column headerText="Municipio "><h:outputText value="#{alumno.idPersona.idColonia.idMunicipio.municipio}" /></p:column>
