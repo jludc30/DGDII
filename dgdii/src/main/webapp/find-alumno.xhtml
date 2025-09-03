@@ -114,12 +114,60 @@
                                  process=":form-buscar-alumno"
                                  update="panelResultados"/>
             </center>
+            <center>
+                <p:commandButton value="Buscar Nativamente" 
+                                 action="#{alumnosController.buscarAlumnoNativo}" 
+                                 process=":form-buscar-alumno"
+                                 update="panelResultadosNativos"/>
+            </center>
         </h:form>
 
         <p:outputPanel id="panelResultados" layout="block">
             <center>
                 <p:panel id="mostrar-alumnos" style="width: 90%">
                     <p:dataTable id="tabla-alumnos" 
+                                 var="alumno" 
+                                 value="#{alumnosController.alumnos}" 
+                                 paginator="true" rows="10"
+                                 emptyMessage="No se encontraron alumnos"                            
+                                 rendered="#{not empty alumnosController.alumnos}">
+                        <f:facet name="header">
+                            <h:outputText value="Alumnos encontrados: (#{alumnosController.alumnos.size()})" />
+                        </f:facet>
+                        <p:column headerText="ID "> <h:outputText value="#{alumno.idAlumno}" /> </p:column>
+                        <p:column headerText="Nombre "> <h:outputText value="#{alumno.idPersona.nombre}" /></p:column>         
+                        <p:column headerText="Apellido Paterno "><h:outputText value="#{alumno.idPersona.apaterno}" /></p:column>
+                        <p:column headerText="Apellido Materno "><h:outputText value="#{alumno.idPersona.amaterno}" /></p:column>
+                        <p:column headerText="Edad "><h:outputText value="#{alumno.idPersona.edad}" /></p:column>
+                        <p:column headerText="Sexo "><h:outputText value="#{alumno.idPersona.sexo == 0 ? 'Mujer' : 'Hombre'}" /></p:column> 
+                        <p:column headerText="Colonia "><h:outputText value="#{alumno.idPersona.idColonia.colonia}" /></p:column>   
+                        <p:column headerText="Municipio "><h:outputText value="#{alumno.idPersona.idColonia.idMunicipio.municipio}" /></p:column>
+                        <p:column headerText="Estado "><h:outputText value="#{alumno.idPersona.idColonia.idMunicipio.idEstado.estado}" /></p:column>
+                        <p:column headerText="Pais "><h:outputText value="#{alumno.idPersona.idColonia.idMunicipio.idEstado.idPais.pais}" /></p:column>
+                        <p:column headerText="Materias y profesores " width="300">
+                            <p:dataList value="#{alumno.alumnosMateriasList}" 
+                                        var="materia" 
+                                        rendered="#{not empty alumno.alumnosMateriasList}">
+                                <h:panelGrid columns="2">
+
+                                    <h:outputText value=" #{materia.idMateria.materia}" />
+                                    <h:outputText value="Profesor: #{materia.idMateria.idProfesor.idPersona.nombre} 
+                                                  #{materia.idMateria.idProfesor.idPersona.apaterno}" />
+                                    
+                                </h:panelGrid>
+                                <p:separator />
+                            </p:dataList>
+                            <h:outputText value="Sin materias registradas" rendered="#{empty alumno.alumnosMateriasList}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </center>
+        </p:outputPanel>
+        
+        <p:outputPanel id="panelResultadosNativos" layout="block">
+            <center>
+                <p:panel id="mostrar-alumnos-nativos" style="width: 90%">
+                    <p:dataTable id="tabla-alumnos-nativos" 
                                  var="alumno" 
                                  value="#{alumnosController.alumnos}" 
                                  paginator="true" rows="10"

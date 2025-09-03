@@ -3,6 +3,7 @@ package com.dgdii.ejb;
 import com.dgdii.models.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -119,4 +120,28 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
 
         return query.getResultList();
     }
+
+    public List<Alumnos> findAlumnosByCriteria(
+            Personas persona, Alumnos alumno, Materias materia,
+            Paises pais, Estados estado, Municipios municipio, Colonias colonia) {
+
+        StringBuilder sb = new StringBuilder();        
+
+        sb.append("SELECT DISTINCT a.* ")
+                .append("FROM ALUMNOS a ")
+                .append("INNER JOIN PERSONAS per ")
+                .append("ON a.ID_PERSONA = per.ID_PERSONA ")  
+                .append("WHERE 1 = 1 ");
+        
+        if (persona.getNombre() != null) {
+            sb.append("AND per.NOMBRE LIKE UPPER('%").append(persona.getNombre()).append("%')");
+        }
+
+       String string = sb.toString();
+        System.out.println(string);
+       
+       return em.createNativeQuery(string, Alumnos.class).getResultList();
+       
+    }
+
 }
