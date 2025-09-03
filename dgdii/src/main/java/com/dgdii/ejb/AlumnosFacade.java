@@ -28,20 +28,8 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
 
     public List<Alumnos> findAlumnosByCriteria(Personas persona, Alumnos alumno, Materias materia, Paises pais, Estados estado, Municipios municipio, Colonias colonia, Integer edad) {
 
-        Integer edadMinima = edad;
-        Integer edadMaxima = 100;
-        LocalDate hoy = LocalDate.now();
-        ZoneId zone = ZoneId.systemDefault();
-
-        // DOB más reciente permitido (fin inclusivo):
-        LocalDate endDob = hoy.minusYears(edadMinima);
-        // DOB más antiguo permitido (inicio inclusivo):
-        LocalDate startDob = hoy.minusYears(edadMaxima + 1).plusDays(1);
-
-        // Convertimos a java.util.Date y hacemos fin exclusivo (+1 día):
-        Date start = Date.from(startDob.atStartOfDay(zone).toInstant());
-        Date endExclusive = Date.from(endDob.plusDays(1).atStartOfDay(zone).toInstant());
-
+        System.out.println("************JPQL*******************");
+        
         StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT DISTINCT a ");
@@ -98,9 +86,23 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
         }
 
         if (edad != null) {
+            Integer edadMinima = edad;
+            Integer edadMaxima = 100;
+            LocalDate hoy = LocalDate.now();
+            ZoneId zone = ZoneId.systemDefault();
+
+            // DOB más reciente permitido (fin inclusivo):
+            LocalDate endDob = hoy.minusYears(edadMinima);
+            // DOB más antiguo permitido (inicio inclusivo):
+            LocalDate startDob = hoy.minusYears(edadMaxima + 1).plusDays(1);
+
+            // Convertimos a java.util.Date y hacemos fin exclusivo (+1 día):
+            Date start = Date.from(startDob.atStartOfDay(zone).toInstant());
+            Date endExclusive = Date.from(endDob.plusDays(1).atStartOfDay(zone).toInstant());
             query.setParameter("startDob", start);
             query.setParameter("endDobExclusive", endExclusive);
         }
+        
         if (persona.getSexo() != null) {
             query.setParameter("sexo", persona.getSexo());
         }
@@ -121,27 +123,65 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
         return query.getResultList();
     }
 
+    
     public List<Alumnos> findAlumnosByCriteria(
             Personas persona, Alumnos alumno, Materias materia,
             Paises pais, Estados estado, Municipios municipio, Colonias colonia) {
 
-        StringBuilder sb = new StringBuilder();        
+        System.out.println("*********QUERIES NATIVAS***********");
+        StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT DISTINCT a.* ")
                 .append("FROM ALUMNOS a ")
                 .append("INNER JOIN PERSONAS per ")
-                .append("ON a.ID_PERSONA = per.ID_PERSONA ")  
+                .append("ON a.ID_PERSONA = per.ID_PERSONA ")
+                .append("INNER JOIN COLONIAS c ")
+                .append("ON per.ID_COLONIA = c.ID_COLONIA ")
+                .append("INNER JOIN MUNICIPIOS m ")
+                .append("ON c.ID_MUNICIPIO = m.ID_MUNICIPIO ")
+                .append("INNER JOIN ESTADOS e ")
+                .append("ON m.ID_ESTADO = e.ID_ESTADO ")
+                .append("INNER JOIN PAISES p ")
+                .append("ON e.ID_PAIS = p.ID_PAIS ")
+                .append("INNER JOIN ALUMNOS_MATERIAS am ")
+                .append("ON a.ID_ALUMNO = am.ID_ALUMNO ")
+                .append("INNER JOIN MATERIAS mat ")
+                .append("ON am.ID_MATERIA = mat.ID_MATERIA ")
                 .append("WHERE 1 = 1 ");
-        
+
+        //Direccion
+        if (colonia != null) {
+            sb.append("AND c.ID_COLONIA = ").append(colonia.getIdColonia()).append(" ");
+        } else if (municipio != null) {
+            sb.append("AND m.ID_MUNICIPIO = ").append(municipio.getIdMunicipio()).append(" ");
+        } else if (estado != null) {
+            sb.append("AND e.ID_ESTADO = ").append(estado.getIdEstado()).append(" ");
+        } else if (pais != null) {
+            sb.append("AND p.ID_PAIS = ").append(pais.getIdPais()).append(" ");
+        }
+        //Persona
+        if (persona.getSexo() != null) {
+            sb.append("AND per.SEXO = ").append(persona.getSexo()).append(" ");
+        }
         if (persona.getNombre() != null) {
-            sb.append("AND per.NOMBRE LIKE UPPER('%").append(persona.getNombre()).append("%')");
+            sb.append("AND per.NOMBRE LIKE UPPER('%").append(persona.getNombre()).append("%')").append(" ");
+        }
+        if (persona.getApaterno() != null) {
+            sb.append("AND per.APATERNO LIKE UPPER('%").append(persona.getApaterno()).append("%')").append(" ");
+        }
+        if (persona.getAmaterno() != null) {
+            sb.append("AND per.AMATERNO LIKE UPPER('%").append(persona.getAmaterno()).append("%')").append(" ");
+        }
+        if (materia != null) {
+            sb.append("AND mat.ID_MATERIA = ").append(materia.getIdMateria()).append(" ");
         }
 
-       String string = sb.toString();
+        sb.append("ORDER BY a.ID_ALUMNO");
+        String string = sb.toString();
         System.out.println(string);
-       
-       return em.createNativeQuery(string, Alumnos.class).getResultList();
-       
+
+        return em.createNativeQuery(string, Alumnos.class).getResultList();
+
     }
 
 }
