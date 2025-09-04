@@ -3,7 +3,6 @@ package com.dgdii.ejb;
 import com.dgdii.models.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -182,6 +181,19 @@ public class AlumnosFacade extends AbstractFacade<Alumnos> {
 
         return em.createNativeQuery(string, Alumnos.class).getResultList();
 
+    }
+    
+    public Alumnos findAlumnosByCriteriaNamedQuery(Alumnos alumno){
+    
+        Query query = em.createNamedQuery("Alumnos.findByIdAlumno");
+                       
+        if(alumno.getIdAlumno() != null){
+            query.setParameter("idAlumno", alumno.getIdAlumno());
+        }else{
+            return null;
+        }
+        
+        return (Alumnos) query.getSingleResult();
     }
 
 }

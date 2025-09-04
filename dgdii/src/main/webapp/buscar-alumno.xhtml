@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Buscar alumnos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+
+        <h:form id="buscar-alumno">
+            <center>
+                <p:panel id="pedir-datos-alumno" header="Escoge un alumno" style="width: 60%">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Escoge un alumno: "/>
+                        <p:selectOneMenu id="escoger-alumno" value="#{alumnosController.current}">
+                            <f:selectItem itemLabel="Selecciona..." itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{alumnosController.itemsAvailableSelectMany}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+            </center>
+            <center>
+                <p:commandButton value="Buscar Alumno" 
+                                 action="#{alumnosController.buscarAlumno}" 
+                                 process=":buscar-alumno"
+                                 update="panelResultado"/>
+            </center>
+
+            <!-- Panel de resultados -->
+            <h:panelGroup id="panelResultado">
+                <p:panel header="Datos del Alumno" rendered="#{not empty alumnosController.buscado}">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="ID Alumno:" />
+                        <h:outputText value="#{alumnosController.buscado.idAlumno}" />
+
+                        <h:outputText value="Matrícula:" />
+                        <h:outputText value="#{alumnosController.buscado.matricula}" />
+
+                        <h:outputText value="Nombre:" />
+                        <h:outputText value="#{alumnosController.buscado.idPersona.nombre}" />
+
+                        <h:outputText value="Apellido Paterno:" />
+                        <h:outputText value="#{alumnosController.buscado.idPersona.apaterno}" />
+
+                        <h:outputText value="Apellido Materno:" />
+                        <h:outputText value="#{alumnosController.buscado.idPersona.amaterno}" />
+
+                        <h:outputText value="Sexo:" />
+                        <h:outputText value="#{alumnosController.buscado.idPersona.sexo == 1 ? 'Hombre' : 'Mujer'}" />
+                    </h:panelGrid>
+
+                    <p:separator/>
+
+                    <!-- Tabla de materias -->
+                    <h3>Materias</h3>
+
+                    <p:dataTable id="tablaMaterias"
+                                 var="am"
+                                 value="#{alumnosController.buscado.alumnosMateriasList}"
+                                 rendered="#{not empty alumnosController.buscado.alumnosMateriasList}"
+                                 emptyMessage="Este alumno no tiene materias registradas."
+                                 rows="10" paginator="true">
+
+                        <p:column headerText="ID Materia">
+                            <h:outputText value="#{am.idMateria.idMateria}" />
+                        </p:column>
+
+                        <p:column headerText="Materia">
+                            <h:outputText value="#{am.idMateria.materia}" />
+                        </p:column>
+
+                        <!-- Ejemplo extra por si tienes profesor/calificación -->
+                        <!--
+                        <p:column headerText="Profesor">
+                            <h:outputText value="#{am.idMateria.idProfesor.idPersona.nombre}" />
+                        </p:column>
+            
+                        <p:column headerText="Calificación">
+                            <h:outputText value="#{am.calificacion}" />
+                        </p:column>
+                        -->
+                    </p:dataTable>
+
+                    <!-- Mensaje cuando la lista está vacía -->
+                    <h:panelGroup rendered="#{empty alumnosController.buscado.alumnosMateriasList}">
+                        <h:outputText value="Este alumno no tiene materias registradas." />
+                    </h:panelGroup>
+                </p:panel>
+            </h:panelGroup>
+
+
+        </h:form>
+    </h:body>
+</html>

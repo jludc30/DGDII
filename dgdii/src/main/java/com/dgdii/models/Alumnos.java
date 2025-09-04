@@ -117,7 +117,7 @@ public class Alumnos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dgdii.models.Alumnos[ idAlumno=" + idAlumno + " ]";
+        return ""+this.idPersona.getNombre()+" "+this.idPersona.getApaterno()+" "+this.getIdPersona().getAmaterno();
     }
     
 }

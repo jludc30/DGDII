@@ -31,6 +31,7 @@ public class AlumnosController implements Serializable {
     @EJB private AlumnosFacade alumnoEJB;
     
     private Alumnos current;
+    private Alumnos buscado;
     private AlumnosMaterias alumnoMateria;
     private Personas persona;
     private Materias materia; 
@@ -78,6 +79,9 @@ public class AlumnosController implements Serializable {
         if (municipio == null) {
             municipio = new Municipios();
         } 
+        if (buscado == null) {
+            buscado = new Alumnos();
+        } 
 
         this.fillEdadesList();
     }
@@ -124,8 +128,12 @@ public class AlumnosController implements Serializable {
 
         this.create();
     }
-    
     public void buscarAlumno(){
+        System.out.println("Buscando alumno: "+this.current.toString());
+        this.buscado = this.alumnoEJB.findAlumnosByCriteriaNamedQuery(current);
+    }
+    
+    public void buscarAlumnos(){
         System.out.println("*******************************************");
         System.out.println("Buscando...");
         System.out.println("Datos Personales: ");
@@ -450,6 +458,14 @@ public class AlumnosController implements Serializable {
     public void setEdad(Integer edad) { this.edad = edad; }
     public List<Integer> getEdades() { return edades; }
     public void setEdades(List<Integer> edades) { this.edades = edades; }
+    public Alumnos getBuscado() { return buscado; }
+    public void setBuscado(Alumnos buscado) { this.buscado = buscado; }
+    public Alumnos getCurrent() {
+        return current;
+    }
+    public void setCurrent(Alumnos current) {
+        this.current = current;
+    }
     
     
     public Alumnos getSelected() {
