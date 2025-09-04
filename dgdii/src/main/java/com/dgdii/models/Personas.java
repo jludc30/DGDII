@@ -55,7 +55,7 @@ public class Personas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "SEXO")
-    private Integer sexo;
+    private Integer sexo = null;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Colonias idColonia;

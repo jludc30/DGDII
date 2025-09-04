@@ -51,7 +51,7 @@
                         <h:outputText value="#{alumnosController.buscado.idPersona.amaterno}" />
 
                         <h:outputText value="Sexo:" />
-                        <h:outputText value="#{alumnosController.buscado.idPersona.sexo == 1 ? 'Hombre' : 'Mujer'}" />
+                        <h:outputText value="#{alumnosController.buscado.idPersona.sexo != null ? alumnosController.buscado.idPersona.sexo == 0 ? 'Mujer': 'Hombre' : ' '}" />
                     </h:panelGrid>
 
                     <p:separator/>
@@ -74,21 +74,14 @@
                             <h:outputText value="#{am.idMateria.materia}" />
                         </p:column>
 
-                        <!-- Ejemplo extra por si tienes profesor/calificación -->
-                        <!--
                         <p:column headerText="Profesor">
-                            <h:outputText value="#{am.idMateria.idProfesor.idPersona.nombre}" />
+                            <h:outputText value="#{am.idMateria.idProfesor.idPersona.nombre} #{am.idMateria.idProfesor.idPersona.apaterno} #{am.idMateria.idProfesor.idPersona.amaterno}" />
                         </p:column>
-            
-                        <p:column headerText="Calificación">
-                            <h:outputText value="#{am.calificacion}" />
-                        </p:column>
-                        -->
+                               
                     </p:dataTable>
 
                     <!-- Mensaje cuando la lista está vacía -->
-                    <h:panelGroup rendered="#{empty alumnosController.buscado.alumnosMateriasList}">
-                        <h:outputText value="Este alumno no tiene materias registradas." />
+                    <h:panelGroup rendered="#{empty alumnosController.buscado.alumnosMateriasList}"> 
                     </h:panelGroup>
                 </p:panel>
             </h:panelGroup>

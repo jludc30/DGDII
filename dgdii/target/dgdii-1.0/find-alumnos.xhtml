@@ -39,7 +39,7 @@
                         <p:outputLabel value="Sexo: "/>
                         <p:selectOneRadio id="sexo-busqueda" value="#{alumnosController.persona.sexo}">
                             <f:selectItem itemLabel="F" itemValue="0"/>
-                            <f:selectItem itemLabel="M" itemValue="1"/>
+                            <f:selectItem itemLabel="H" itemValue="1"/>
                             <f:validateBean disabled="true"/>
                         </p:selectOneRadio>
                         <p:outputLabel value="Matricula: "/>
@@ -132,7 +132,7 @@
                                  emptyMessage="No se encontraron alumnos"                            
                                  rendered="#{not empty alumnosController.alumnos}">
                         <f:facet name="header">
-                            <h:outputText value="Alumnos encontrados: (#{alumnosController.alumnos.size()})" />
+                            <h:outputText value="Alumnos encontrados JPQL: (#{alumnosController.alumnos.size()})" />
                         </f:facet>
                         <p:column headerText="ID "> <h:outputText value="#{alumno.idAlumno}" /> </p:column>
                         <p:column headerText="Nombre "> <h:outputText value="#{alumno.idPersona.nombre}" /></p:column>         
@@ -174,7 +174,7 @@
                                  emptyMessage="No se encontraron alumnos"                            
                                  rendered="#{not empty alumnosController.alumnos}">
                         <f:facet name="header">
-                            <h:outputText value="Alumnos encontrados: (#{alumnosController.alumnos.size()})" />
+                            <h:outputText value="Alumnos encontrados Native Query: (#{alumnosController.alumnos.size()})" />
                         </f:facet>
                         <p:column headerText="ID "> <h:outputText value="#{alumno.idAlumno}" /> </p:column>
                         <p:column headerText="Nombre "> <h:outputText value="#{alumno.idPersona.nombre}" /></p:column>         
